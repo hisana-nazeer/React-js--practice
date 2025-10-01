@@ -1,0 +1,65 @@
+import React, { useState } from "react";
+import { colorNameToHex } from "./colorData";
+import "./styles.css";
+
+const ColorExplorer = () => {
+  const [color, setColor] = useState("")
+  const [outputcolor, setOutputColor] = useState("")
+  const [outputHex, setOutputHex] = useState("")
+
+  const handleSubmit = () => {
+    console.log("handle submit called")
+    const normalized = color.trim().toLowerCase()
+    if (normalized in colorNameToHex) {
+      setOutputColor(normalized)
+      setOutputHex(colorNameToHex[normalized])
+
+    }
+   
+  
+  }
+  
+  console.log(outputcolor ,  outputHex )
+  
+  return (
+    <div className="container">
+      <h1>Color Explorer</h1>
+      <div className="input-section">
+        <input
+          type="text"
+          data-testid="color-input"
+          placeholder="Type a color name e.g. lavender"
+          value={color}
+          onChange={(e) => setColor(e.target.value)}
+
+        />
+        <button data-testid="search-button" onClick={handleSubmit}>
+          🔍
+        </button>
+      </div>
+     
+        <div className="color-box" data-testid="color-box">
+          <div
+          className="preview"
+          role="presentation"
+          data-testid="color-preview"
+          style={{
+            backgroundColor: outputHex || "transparent"
+          }}
+          ></div>
+          <p data-testid="color-name">
+            <strong>Name:</strong> {outputcolor}
+          </p>
+          <p data-testid="color-hex">
+            <strong>Hex:</strong> {outputHex}
+        </p>
+
+      
+      </div>
+
+
+    </div>
+  );
+};
+
+export default ColorExplorer;
