@@ -1,0 +1,22 @@
+import { useState } from 'react';
+// ✅ Complete the custom hook below
+
+ 
+export default function App() {
+  // ✅ Use the custom hook inside this component
+  const [isOn, setIsOn] = useState(false);
+
+  function useToggle() {
+  // your code here
+  setIsOn((current)=>!current)
+
+}
+  
+
+  return (
+    /* your toggle function for the onClick method */
+    <button onClick={useToggle} data-testid="toggle-button">{useToggle}{isOn?"ON":"OFF"}
+      {/* Render "ON" or "OFF" based on state */}
+    </button>
+  );
+}
