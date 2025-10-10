@@ -1,0 +1,71 @@
+import React, { useState } from 'react';
+
+export default function AgeCalculator() {
+  const [birthdate, setBirthdate] = useState("")
+  const [error, setError] = useState("")
+  const [age, setAge] = useState(null)
+
+
+  const calculateAge = () => {
+    console.log("hi")
+
+    if (!birthdate) {
+      setError("Please select a date")
+      return
+    }
+
+    const today = new Date(), birth = new Date(birthdate)
+
+    const years = today.getFullYear() - birth.getFullYear()
+    const months = today.getMonth() - birth.getMonth()
+    const days = today.getDate() - birth.getDate()
+
+   
+    if (birth > today) {
+      setError("birth date cannot be in the future"), setAge(null)
+      return
+    }
+
+    if (days < 0) {
+      months--;
+      const prevMonth = Date(today.getFullYear(), today.getMonth(), 0).getDate();
+      days += prevMonth;
+    }
+    // Borrow months if months < 0
+    if (months < 0) {
+      years--;
+      months += 12;
+    }
+
+    setAge({ years, months, days });
+  };
+
+    
+  
+
+
+
+
+
+  return (
+    <div className="conatiner">
+      <h2 className="title"></h2>
+      <label className="label"></label>
+      <input
+        id="birthdate"
+        type="date"
+        value={birthdate}
+        onChange={(e) => setBirthdate(e.target.value)}
+        className="input-date" />
+      <button className="btn-calc" onClick={calculateAge}>Calculate Age</button>
+
+
+      {error && <p className="error-msg" style={{ color: "red" }}>{error}</p>}
+
+      {age && < p className="age-result">
+        Age: {age.days} days,{age.months} months,{age.years} years</p>}
+      </div>
+    );
+
+  }
+
